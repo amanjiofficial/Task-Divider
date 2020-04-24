@@ -6,10 +6,6 @@ class Formcerti extends Component{
         return(
             <Row>
                 <Form>
-              <FormGroup>
-                    <Label for="cid">Certification ID</Label>
-                    <Input id="cid" name="cid" />
-                </FormGroup>  
 
                 <FormGroup>
                     <Label for="links">link</Label>
@@ -20,12 +16,6 @@ class Formcerti extends Component{
                     <Label for="taskid">Task ID</Label>
                     <Input id="taskid" name="taskid" />
                 </FormGroup>
-
-                
-                <FormGroup>
-                    <Label for="srno">Srno</Label>
-                    <Input id="srno" name="srno" />
-                </FormGroup>  
 
                 <Button>ADD CERTIFICATION</Button> 
             </Form>

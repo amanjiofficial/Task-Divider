@@ -1,25 +1,17 @@
 import web3 from './web3';
 
-const address = '0x960b81a3de1abebc0902ad20be57592bebdfc6ac';
+const address = '0x550b4fb5dce6f91e173f53e4b9c4d510f0f29a04';
 
-const abi = [
+const abi =[
 	{
 		"constant": false,
 		"inputs": [
-			{
-				"name": "certid",
-				"type": "uint256"
-			},
 			{
 				"name": "link",
 				"type": "string"
 			},
 			{
 				"name": "tid",
-				"type": "uint256"
-			},
-			{
-				"name": "srollno",
 				"type": "uint256"
 			}
 		],
@@ -55,9 +47,19 @@ const abi = [
 		"constant": false,
 		"inputs": [
 			{
-				"name": "taid",
+				"name": "prefe",
 				"type": "uint256"
-			},
+			}
+		],
+		"name": "addPreference",
+		"outputs": [],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "nonpayable"
+	},
+	{
+		"constant": false,
+		"inputs": [
 			{
 				"name": "tname",
 				"type": "string"
@@ -65,13 +67,42 @@ const abi = [
 			{
 				"name": "tag",
 				"type": "string"
-			},
-			{
-				"name": "weights",
-				"type": "uint256"
 			}
 		],
 		"name": "addtask",
+		"outputs": [],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "nonpayable"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "cid",
+				"type": "uint256"
+			}
+		],
+		"name": "checkcertstatus",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "nonpayable"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "cid",
+				"type": "uint256"
+			}
+		],
+		"name": "verifycertificate",
 		"outputs": [],
 		"payable": false,
 		"type": "function",
@@ -88,10 +119,6 @@ const abi = [
 		"name": "certification",
 		"outputs": [
 			{
-				"name": "cid",
-				"type": "uint256"
-			},
-			{
 				"name": "links",
 				"type": "string"
 			},
@@ -100,7 +127,29 @@ const abi = [
 				"type": "uint256"
 			},
 			{
-				"name": "srno",
+				"name": "gmemaddr",
+				"type": "address"
+			},
+			{
+				"name": "verified",
+				"type": "uint256"
+			},
+			{
+				"name": "verstatus",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "currbiddone",
+		"outputs": [
+			{
+				"name": "",
 				"type": "uint256"
 			}
 		],
@@ -111,11 +160,11 @@ const abi = [
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "fmember",
+		"name": "currtaskid",
 		"outputs": [
 			{
 				"name": "",
-				"type": "address"
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -158,6 +207,14 @@ const abi = [
 			{
 				"name": "rollno",
 				"type": "uint256"
+			},
+			{
+				"name": "bal",
+				"type": "uint256"
+			},
+			{
+				"name": "currbidstat",
+				"type": "bool"
 			}
 		],
 		"payable": false,
@@ -183,15 +240,30 @@ const abi = [
 		"inputs": [
 			{
 				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "prefer",
+		"outputs": [
+			{
+				"name": "pref",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
 				"type": "uint256"
 			}
 		],
 		"name": "tasks",
 		"outputs": [
-			{
-				"name": "tid",
-				"type": "uint256"
-			},
 			{
 				"name": "name",
 				"type": "string"
@@ -199,14 +271,37 @@ const abi = [
 			{
 				"name": "tags",
 				"type": "string"
-			},
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [
 			{
-				"name": "weightage",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "tempassign",
+		"outputs": [
+			{
+				"name": "tid",
 				"type": "uint256"
 			},
 			{
-				"name": "srno",
+				"name": "assignaddr",
+				"type": "address"
+			},
+			{
+				"name": "assignverify",
 				"type": "uint256"
+			},
+			{
+				"name": "assignstatus",
+				"type": "bool"
 			}
 		],
 		"payable": false,

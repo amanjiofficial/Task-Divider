@@ -5,11 +5,7 @@ class FormTask extends Component{
     render(){
         return(
             <Row>
-                <Form>
-              <FormGroup>
-                    <Label for="tid">Task ID</Label>
-                    <Input id="tid" name="tid" />
-                </FormGroup>  
+                <Form> 
 
                 <FormGroup>
                     <Label for="Tname">Task Name</Label>
@@ -20,12 +16,6 @@ class FormTask extends Component{
                     <Label for="tag">Tag</Label>
                     <Input id="tag" name="tag" />
                 </FormGroup>
-
-                
-                <FormGroup>
-                    <Label for="weight">Weight</Label>
-                    <Input id="weight" name="weight" />
-                </FormGroup>  
 
                 <Button>ADD TASK</Button> 
             </Form>
