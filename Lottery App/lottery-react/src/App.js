@@ -18,6 +18,22 @@ class App extends Component
       prefe:0,
       ctask:'',
       cid:0,
+      cc:'',
+      linkC:'',
+      memC:'',
+      tC:'',
+      addrC:'',
+      taskCName:'',
+      validC:'',
+      boolC:0,
+      totalTasks:'',
+      totalATasks:'',
+      tagsb:'',
+      tidb:'',
+      tnameb:'',
+      tidAb:'',
+      tnameAb:'',
+      pnameAb:'',
     };
     
     this.fetchBal=this.fetchBal.bind(this)
@@ -29,17 +45,126 @@ class App extends Component
     this.currTask=this.currTask.bind(this)
     this.currTaskName=this.currTaskName.bind(this)
     this.checkPrefer=this.checkPrefer.bind(this)
+    this.verifyCerti=this.verifyCerti.bind(this)
+    this.fetchNextCertinum=this.fetchNextCertinum.bind(this)
+    this.fetchNextCerti=this.fetchNextCerti.bind(this)
+    this.fetchTNameCerti=this.fetchTNameCerti.bind(this)
+    this.fetchPNameCerti=this.fetchPNameCerti.bind(this)
+    this.callVerifyCerti=this.callVerifyCerti.bind(this)
+    this.totalTasks=this.totalTasks.bind(this)
+    this.totalATasks=this.totalATasks.bind(this)
+    this.fetchTask=this.fetchTask.bind(this)
+    this.fetchATask=this.fetchATask.bind(this)
   }
+
   async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
     this.setState({ myAddr:accounts[0] });
     console.log(this.state.myAddr);
   }
+  totalTasks=async () => {
+    var numu;
+    try {
+        numu = await lottery.methods.totalTasks().call();
+        this.setState({totalTasks:numu})
+    } catch (e) {
+       console.error(e);
+    }
+  }
+
+  totalATasks=async () => {
+    var numu;
+    try {
+        numu = await lottery.methods.totalAssigned().call();
+        this.setState({totalATasks:numu})
+    } catch (e) {
+       console.error(e);
+    }
+  }
+
+  callVerifyCerti = async () => {
+    try {
+       await lottery.methods.verifycertificate(this.state.boolC).send({from:this.state.myAddr});
+       this.setState({taskCName:'',cc:'',linkC:'',memC:'',tC:'',addrC:'',})
+      } catch (e) {
+       console.error(e);
+    }
+  }
+  verifyCerti(){
+    if(this.state.validC==='valid'){
+      this.setState({boolC:1})
+    }
+    else this.setState({boolC:1})
+    this.callVerifyCerti()
+  }
+  
+  fetchTNameCerti=async (event) => {
+    var numu;
+    try {
+        numu = await lottery.methods.tasks(this.state.tC).call();
+        console.log(numu);
+        this.setState({taskCName:numu.name})
+    } catch (e) {
+       console.error(e);
+    }
+  }
+  fetchTask=async () => {
+    var numu;
+    try {
+        numu = await lottery.methods.tasks(this.state.tidb).call();
+        console.log(numu);
+        this.setState({tnameb:numu.name,tagsb:numu.tags})
+    } catch (e) {
+       console.error(e);
+    }
+  }
+  fetchATask=async () => {
+    var numu;
+    try {
+        numu = await lottery.methods.tempassign(this.state.tidAb).call();
+        console.log(numu);
+        this.setState({tnameAb:numu.tname,pnameAb:numu.pname})
+    } catch (e) {
+       console.error(e);
+    }
+  }
+  fetchPNameCerti=async (event) => {
+    var numu;
+    try {
+        numu = await lottery.methods.g_members(this.state.addrC).call();
+        console.log(numu);
+        this.setState({memC:numu.name})
+    } catch (e) {
+       console.error(e);
+    }
+  }
+  fetchNextCerti=async (event) => {
+    var numu;
+    try {
+        numu = await lottery.methods.certification(this.state.cc).call();
+        console.log(numu);
+        this.setState({linkC:numu.links,tC:numu.taskid,addrC:numu.gmemaddr,})
+        this.fetchPNameCerti();
+        this.fetchTNameCerti();
+    } catch (e) {
+       console.error(e);
+    }
+  }
+  fetchNextCertinum=async (event) => {
+    var numu;
+    try {
+        numu = await lottery.methods.g_members(this.state.myAddr).call();
+        console.log(numu);
+        this.setState({cc:numu.toverify})
+        this.fetchNextCerti();
+    } catch (e) {
+       console.error(e);
+    }
+  }
   handleChange(event){
     const {name,value,type,checked} = event.target
     type === "checkbox" ? this.setState({[name]:checked}) : this.setState({[name]:value})
   }
-  
   fetchBal = async (event) => {
     var numu=0;
     try {
@@ -50,7 +175,6 @@ class App extends Component
        console.error(e);
     }
   }
-
   createMem = async (event) => {
     try {
        await lottery.methods.addmember(this.state.rno,this.state.memname,this.state.myAddr).send({from:this.state.myAddr});
@@ -67,7 +191,7 @@ class App extends Component
   }
   createCerti = async (event) => {
     try {
-       await lottery.methods.addcerti(this.state.link,this.state.certi).send({from:this.state.myAddr});
+       await lottery.methods.addcerti(this.state.link,this.state.tid).send({from:this.state.myAddr});
       } catch (e) {
        console.error(e);
     }
@@ -181,6 +305,68 @@ class App extends Component
           />
           <br/>
         <button onClick={this.updatePrefer}>Submit Preference</button>
+        <br/><br/>
+        <h3>Fetch Next Certifications and Experience to verify</h3>
+        <button onClick={this.fetchNextCertinum}>Fetch</button>
+        <h4>Work Exp/Certification URL: {this.state.linkC} <br/>
+            Task: {this.state.taskCName} <br/>
+            by Member :{this.state.memC}</h4>
+        
+            Valid
+             <input
+               name="validC"
+               type="radio"
+               value ="valid"
+               checked={this.state.validC === "valid"}
+               onChange={this.handleChange}
+             />
+            <br/>
+            Invalid
+             <input
+               name="validC"
+               type="radio"
+               value ="invalid"
+               checked={this.state.validC === "invalid"}
+               onChange={this.handleChange}
+             />
+        <br/>
+        <button onClick={this.verifyCerti}>Submit</button>
+        <br/>
+        <br/>
+        <h3>Display Tasks</h3>
+        <button onClick={this.totalTasks}>Submit</button>
+        <h3>Total Tasks={this.state.totalTasks}</h3>
+        <h2>See Particular Task</h2>
+        <input
+          name="tidb"
+          type="text"
+          value ={this.state.tidb}
+          placeholder="Task Number"
+          onChange={this.handleChange}
+          />
+          <br/>
+        <button onClick={this.fetchTask}>Fetch Task</button>
+        <h2>Task: {this.state.tnameb}<br/> Tags: {this.state.tagsb}</h2>
+
+
+        <h3>Display Assigned Tasks</h3>
+        <button onClick={this.totalATasks}>Submit</button>
+        <h3>Total Assigned Tasks={this.state.totalATasks}</h3>
+
+        <h2>See Particular Assigned Task</h2>
+        <input
+          name="tidAb"
+          type="text"
+          value ={this.state.tidAb}
+          placeholder="Assigned Task Number"
+          onChange={this.handleChange}
+          />
+          <br/>
+        <button onClick={this.fetchATask}>Fetch Assigned Task</button>
+        <h2>Task: {this.state.tnameAb}<br/> Assigned To: {this.state.pnameAb}</h2>
+
+        
+
     </div>
        );
   }

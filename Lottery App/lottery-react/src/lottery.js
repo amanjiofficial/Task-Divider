@@ -1,6 +1,7 @@
 import web3 from './web3';
 
-const address = '0x550b4fb5dce6f91e173f53e4b9c4d510f0f29a04';
+//const address = '0xa0e446691eb2e95bc42cb16295be97ea489f1256';
+const address = '0x16f37228647896477cbdb24fa1a766ae08505418';
 
 const abi =[
 	{
@@ -71,25 +72,6 @@ const abi =[
 		],
 		"name": "addtask",
 		"outputs": [],
-		"payable": false,
-		"type": "function",
-		"stateMutability": "nonpayable"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "cid",
-				"type": "uint256"
-			}
-		],
-		"name": "checkcertstatus",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
 		"payable": false,
 		"type": "function",
 		"stateMutability": "nonpayable"
@@ -215,6 +197,10 @@ const abi =[
 			{
 				"name": "currbidstat",
 				"type": "bool"
+			},
+			{
+				"name": "toverify",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -302,6 +288,42 @@ const abi =[
 			{
 				"name": "assignstatus",
 				"type": "bool"
+			},
+			{
+				"name": "tname",
+				"type": "string"
+			},
+			{
+				"name": "pname",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalAssigned",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalTasks",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
