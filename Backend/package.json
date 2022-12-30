@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "ganache-cli": "^6.9.1",
-    "mocha": "^7.0.1",
+    "mocha": "^10.2.0",
     "node-gyp": "^6.1.0",
     "rebuild": "^0.1.2",
     "solc": "^0.4.17",
